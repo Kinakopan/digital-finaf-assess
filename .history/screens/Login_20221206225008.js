@@ -1,6 +1,5 @@
 import {View, Text, Button, Image, TextInput} from 'react-native';
 import React from 'react';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import {
   createUserWithEmailAndPassword,

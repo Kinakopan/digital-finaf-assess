@@ -10,13 +10,12 @@ export default function App() {
   const Stack = createStackNavigator();
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen name="Login" component={Login}/>
-          <Stack.Screen name="Home" component={Home}/>
-        </Stack.Navigator>
-      </NavigationContainer>
-  </GestureHandlerRootView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={Login}/>
+        <Stack.Screen name="Home" component={Home}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+
   );
 }
