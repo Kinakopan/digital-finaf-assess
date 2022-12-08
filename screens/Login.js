@@ -1,39 +1,78 @@
 import {View, Text, Button, Image, TextInput} from 'react-native';
 import React from 'react';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword
 } from "firebase/auth";
 import { useState } from 'react';
 import { auth } from '../firebase/firebaseConfig.js';
 
 export default function Login({navigation}) {
-
+  const [text, setText] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [btmText, setbtmText] = useState("");
 
-  const CreateUser = async () => {
-    const user = await createUserWithEmailAndPassword(auth, email, password);
-    console.log(user);
+  // const CreateUser = async () => {
+  //     const user = await createUserWithEmailAndPassword(auth, email, password);
+  //     console.log("created user", user);
+  // }
+
+    const CreateUser = async () => {
+      try {
+        setEmail("");
+        setPassword("");
+        const user = await createUserWithEmailAndPassword(auth, email, password);
+        console.log(user, "registered");
+      } catch(error) {
+        console.log(error.message);
+      }
   }
-  return
-  <GestureHandlerRootView style={{ flex: 1 }}>
-    <View>
-      <Text>I'm on the Login page</Text>
-      <TextInput onChangeText={(text) => setEmail(text)} placeholder="email"/>
-      <TextInput onChangeText={(text) => setPassword(text)} placeholder="Password"/>
-      <Button
-        title="Create Account"
-        onPress={() => {
-          CreateUser();
-        }}
-      />
-      <Button
-        title="Go to details"
-        onPress={() => navigation.navigate('Home')}
-      ></Button>
-    </View>
-  </GestureHandlerRootView>
+
+  // const SignIn = async () => {
+  //     const user = await signInWithEmailAndPassword(auth, email, password);
+  //     console.log("Sign in", user.user.uid);
+  // }
+
+  const SignIn = async () => {
+    try {
+      const user = await signInWithEmailAndPassword(auth, email, password)
+      console.log(user);
+      setTimeout(() => {
+        navigation.navigate("Home");
+      }, 1000)
+    } catch(error) {
+      console.log(error.message);
+    }
+  }
+
+  return <View>
+    <TextInput
+      onChangeText={(text) => setEmail(text)}
+      placeholder="Email..."/>
+
+    <TextInput
+      onChangeText={(text) => setPassword(text)} placeholder="Password..."/>
+
+    <Button
+      onPress={() => {
+        SignIn();
+      }}
+      title="Login"/>
+
+    <Button
+      onPress={() => {
+        CreateUser();
+      }}
+      title="Create Account"/>
+
+    <Text>
+      {/* {props.btmText} */}
+    </Text>
+
+    {/* <Button
+      title="Go to Home page"
+      onPress={()=> navigation.navigate("Home")}/> */}
+  </View>
 }
